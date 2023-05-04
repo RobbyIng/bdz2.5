@@ -1,5 +1,5 @@
 import { ProductItem } from '../../components/Product'
-import './index.css'
+import styles from './index.module.css'
 import { fetchSearchProducts } from '../../api/products'
 import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
@@ -22,7 +22,7 @@ export const ProductList = () => {
   if (data.err) return <p>Произошла ошибка: {data.message}</p>
   if (data)
     return (
-      <div className="cardProductList">
+      <div className={styles.cardProductList}>
         {data.map((productItem) => {
           return <ProductItem key={productItem._id} productItem={productItem} />
         })}

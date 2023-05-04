@@ -1,8 +1,25 @@
 import { NavLink } from 'react-router-dom'
 import styles from './index.module.css'
 import React from 'react'
-import { navLinkMass } from '../../utils/constants'
 import { Search } from '../../components/Search'
+
+const navLinkMass = [
+  {
+    to: '/liked',
+    iClName: 'fa fa-regular fa-heart fa-lg',
+    pValue: 'Избранное',
+  },
+  {
+    to: '/basket',
+    iClName: 'fa fa-regular fa-briefcase fa-lg',
+    pValue: 'Корзина',
+  },
+  {
+    to: '/userData',
+    iClName: 'fa fa-light fa-paw fa-lg',
+    pValue: 'Пользователь',
+  },
+]
 
 const Header = () => {
   return (
