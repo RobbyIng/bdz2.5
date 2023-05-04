@@ -2,26 +2,31 @@ import { NavLink } from 'react-router-dom'
 import styles from './index.module.css'
 import React from 'react'
 import { Search } from '../../components/Search'
-
-const navLinkMass = [
-  {
-    to: '/liked',
-    iClName: 'fa fa-regular fa-heart fa-lg',
-    pValue: 'Избранное',
-  },
-  {
-    to: '/basket',
-    iClName: 'fa fa-regular fa-briefcase fa-lg',
-    pValue: 'Корзина',
-  },
-  {
-    to: '/userData',
-    iClName: 'fa fa-light fa-paw fa-lg',
-    pValue: 'Пользователь',
-  },
-]
+import { useSelector } from 'react-redux'
 
 const Header = () => {
+  const { name } = useSelector((state) => state.user)
+  const { cartAmount } = useSelector((state) => state.cart)
+
+  const navLinkMass = [
+    {
+      to: '/liked',
+      iClName: 'fa fa-regular fa-heart fa-lg',
+      pValue: 'Избранное',
+    },
+    {
+      to: '/basket',
+      iClName: 'fa fa-regular fa-briefcase fa-lg',
+      pValue: 'Корзина',
+      navCart: cartAmount ? cartAmount.length : '',
+    },
+    {
+      to: '/userData',
+      iClName: 'fa fa-light fa-paw fa-lg',
+      pValue: name ? name : 'Пользователь',
+    },
+  ]
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.shopName}>
@@ -45,9 +50,11 @@ const Header = () => {
                   className={({ isActive }) => (isActive ? styles.active : '')}
                   to={elemLink.to}
                 >
-                  <i className={elemLink.iClName}>
-                    <p className={styles.navText}>{elemLink.pValue}</p>
-                  </i>
+                  <i className={elemLink.iClName}></i>
+                  {elemLink.navCart && (
+                    <span className={styles.cartAmoun}>{elemLink.navCart}</span>
+                  )}
+                  <p className={styles.navText}>{elemLink.pValue}</p>
                 </NavLink>
               </li>
             )
