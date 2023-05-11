@@ -7,6 +7,8 @@
 
 .cardProductList {
   padding: 2px;
+  max-height: 62vh;
+  overflow: auto;
 }
 
 .cardTitle {
@@ -28,8 +30,8 @@
   height: 32vh;
   width: 15vw;
   position: -webkit-sticky;
-  position: sticky;
   top: 85px;
+  position: sticky;
   border-radius: 10px;
   border: solid rgb(200, 200, 150);
   display: flex;
