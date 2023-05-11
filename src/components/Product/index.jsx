@@ -7,6 +7,12 @@ export const ProductItem = ({ productItem }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const [...cartList] = useSelector((state) => state.cart)
+
+  const handleAddButton = () => {
+    if (!cartList.find((element) => element.id === productItem._id))
+      dispatch(addCartItem({ id: productItem._id, count: 1 }))
+  }
   return (
     <div className={styles.cardProduct}>
       <div
@@ -29,9 +35,8 @@ export const ProductItem = ({ productItem }) => {
           type="button"
           data-action="edit"
           className={styles.addToBin}
-          onClick={() =>
-            dispatch(addCartItem({ id: productItem._id, count: 1 }))
-          }
+          onClick={() => handleAddButton()}
+          disabled={productItem.stock === 0}
         >
           В корзину
         </button>

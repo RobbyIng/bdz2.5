@@ -5,14 +5,17 @@ import { useQuery } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux'
 import { cleanUser } from '../../redux/slices/userSlice'
 import { useAuth } from '../../hooks/useAuth'
+import { cleanCart } from '../../redux/slices/cartSlice'
 
 export const UserData = () => {
+  document.getElementById('footerId').style.position = 'fixed'
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const { token } = useAuth()
 
   const handleExit = () => {
+    dispatch(cleanCart())
     dispatch(cleanUser())
     return navigate('/')
   }

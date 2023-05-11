@@ -14,6 +14,7 @@ const signInSchema = Yup.object().shape({
 })
 
 export const SignIn = () => {
+  document.getElementById('footerId').style.position = 'fixed'
   const navigate = useNavigate()
   const dispatch = useDispatch()
 

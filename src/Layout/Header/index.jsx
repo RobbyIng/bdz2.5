@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 const Header = () => {
   const { name } = useSelector((state) => state.user)
-  const { cartAmount } = useSelector((state) => state.cart)
+  const { cart } = useSelector((state) => state)
 
   const navLinkMass = [
     {
@@ -18,7 +18,7 @@ const Header = () => {
       to: '/basket',
       iClName: 'fa fa-regular fa-briefcase fa-lg',
       pValue: 'Корзина',
-      navCart: cartAmount ? cartAmount.length : '',
+      navCart: cart.length ? cart.length : '',
     },
     {
       to: '/userData',

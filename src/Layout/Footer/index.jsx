@@ -24,7 +24,7 @@ const fourthFootElem = [
 
 const Footer = (styleFooter) => {
   return (
-    <div className={styles.Footer} style={styleFooter}>
+    <div className={styles.Footer} id="footerId">
       <div className={styles.firstFooter}>
         <h1>
           <i className="fa fa-light fa-paw fa-2xl"></i>

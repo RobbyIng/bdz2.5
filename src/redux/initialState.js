@@ -5,9 +5,7 @@ export const myInitialState = {
   filter: {
     search: '',
   },
-  cart: {
-    list: [],
-  },
+  cart: [],
   favorites: {},
 }
 
@@ -15,5 +13,4 @@ export const getInitialState = () => {
   const data = localStorage.getItem(LC_NAMING)
 
   return data ? JSON.parse(data) : myInitialState
-  // return myInitialState
 }

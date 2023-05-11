@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
 export const Home = () => {
+  // document.getElementById('footerId').style.position = 'fixed'
   const navigate = useNavigate()
   const { token } = useSelector((state) => state.user)
 

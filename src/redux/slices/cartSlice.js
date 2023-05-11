@@ -6,22 +6,32 @@ export const cartSlice = createSlice({
   initialState: myInitialState.cart,
   reducers: {
     addCartItem(state, action) {
-      console.log(state.list)
-      // state.push(action.payload)
-      state.list =
-        state.list.length > 0
-          ? [...state.list, action.payload]
-          : [action.payload]
-      return state
+      return state ? [...state, action.payload] : [action.payload]
     },
-    // Object.assign({}, state, { tasks: [...state.tasks,  { id: '5', task:'test123'}] });
-    //   changeSearchValue(state, action) {
-    //     state.search = action.payload
-    //   }
-
-    // state.id ? [...state, action.payload] : action.payload
+    deleteCartItem(state, action) {
+      return state.filter((el) => el.id !== action.payload)
+    },
+    cleanCart: () => {
+      return myInitialState.cart
+    },
+    incrementCartItem(state, action) {
+      return state.forEach((el) =>
+        el.id === action.payload ? (el.count = el.count + 1) : el.count
+      )
+    },
+    decrementCartItem(state, action) {
+      return state.forEach((el) =>
+        el.id === action.payload ? (el.count = el.count - 1) : el.count
+      )
+    },
   },
 })
 
-export const { addCartItem } = cartSlice.actions
+export const {
+  addCartItem,
+  cleanCart,
+  deleteCartItem,
+  incrementCartItem,
+  decrementCartItem,
+} = cartSlice.actions
 export const cartReducer = cartSlice.reducer
