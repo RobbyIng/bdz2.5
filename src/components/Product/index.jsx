@@ -7,11 +7,11 @@ export const ProductItem = ({ productItem }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [...cartList] = useSelector((state) => state.cart)
+  const { cart } = useSelector((state) => state)
 
   const handleAddButton = () => {
-    if (!cartList.find((element) => element.id === productItem._id))
-      dispatch(addCartItem({ id: productItem._id, count: 1 }))
+    if (!cart.find((element) => element.id === productItem._id))
+      dispatch(addCartItem({ id: productItem._id, count: 1, included: true }))
   }
   return (
     <div className={styles.cardProduct}>

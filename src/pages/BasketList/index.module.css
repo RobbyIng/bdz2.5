@@ -12,9 +12,10 @@
 }
 
 .cardTitle {
-  font-size: larger;
+  font-size: large;
   font-weight: bold;
   text-align: center;
+  font-family: sans-serif;
 }
 
 .wrapper {

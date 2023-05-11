@@ -12,23 +12,23 @@ export const BasketList = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [...cartList] = useSelector((state) => state.cart)
+  const { cart } = useSelector((state) => state)
 
   // cartList.length > 3
   //   ? (document.getElementById('footerId').style.position = 'static')
   //   : (document.getElementById('footerId').style.position = 'fixed')
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['getCartProduct', cartList],
+    queryKey: ['getCartProduct', cart],
     queryFn: async () => {
       return await Promise.allSettled(
-        cartList.map((el) => fetchCurrentProduct(token, el.id))
+        cart.map((el) => fetchCurrentProduct(token, el.id))
       ).then((value) => {
         return value
       })
     },
   })
-  if (cartList.length === 0)
+  if (cart.length === 0)
     return (
       <p className={styles.cardTitle}>
         Добавьте элементы в корзину из{' '}
@@ -41,20 +41,32 @@ export const BasketList = () => {
   if (isError) return <p>Произошла ошибка: {error}</p>
   if (data.err) return <p>Произошла ошибка: {data.message}</p>
 
+  const totalAmount = cart.reduce((accumulator, el) => {
+    return accumulator + (el.included ? 1 : 0)
+  }, 0)
   const totalPrice = data.reduce((accumulator, cartItem) => {
-    const cartElem = cartList.find((el) => el.id === cartItem.value._id)
+    const cartElem = cart.find(
+      (el) => el.included && el.id === cartItem.value._id
+    )
     return (
       accumulator +
-      cartElem.count *
-        cartItem.value.price *
-        (1 - cartItem.value.discount / 100)
+      (cartElem
+        ? cartElem.count *
+          cartItem.value.price *
+          (1 - cartItem.value.discount / 100)
+        : 0)
     )
   }, 0)
   const totalDiscount = data.reduce((accumulator, cartItem) => {
-    const cartElem = cartList.find((el) => el.id === cartItem.value._id)
+    const cartElem = cart.find(
+      (el) => el.included && el.id === cartItem.value._id
+    )
     return (
       accumulator +
-      (cartElem.count * cartItem.value.price * cartItem.value.discount) / 100
+      (cartElem
+        ? (cartElem.count * cartItem.value.price * cartItem.value.discount) /
+          100
+        : 0)
     )
   }, 0)
   return (
@@ -86,7 +98,7 @@ export const BasketList = () => {
           <div className={styles.summaryWrapper}>
             <p className={styles.label}>Итого:</p>
             <p className={styles.summaryCost}>
-              {cartList.length} позиций: {totalPrice} руб
+              {totalAmount} позиций: {totalPrice} руб
             </p>
             <p className={styles.summaryDiscount}>
               Общая скидка: {totalDiscount} руб

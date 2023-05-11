@@ -24,6 +24,11 @@ export const cartSlice = createSlice({
         el.id === action.payload ? (el.count = el.count - 1) : el.count
       )
     },
+    changeCartItemIncluded(state, action) {
+      return state.forEach((el) =>
+        el.id === action.payload ? (el.included = !el.included) : el.included
+      )
+    },
   },
 })
 
@@ -33,5 +38,6 @@ export const {
   deleteCartItem,
   incrementCartItem,
   decrementCartItem,
+  changeCartItemIncluded,
 } = cartSlice.actions
 export const cartReducer = cartSlice.reducer
