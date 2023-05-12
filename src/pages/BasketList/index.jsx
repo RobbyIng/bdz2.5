@@ -1,5 +1,5 @@
 import styles from './index.module.css'
-import { useAuth } from '../../hooks/useAuth'
+import { useNoAuth } from '../../hooks/useNoAuth'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useQuery } from '@tanstack/react-query'
@@ -8,26 +8,21 @@ import { CartItem } from '../../components/CartItem'
 import { cleanCart } from '../../redux/slices/cartSlice'
 
 export const BasketList = () => {
-  const { token } = useAuth()
+  const { token } = useNoAuth()
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { cart } = useSelector((state) => state)
 
-  // cartList.length > 3
-  //   ? (document.getElementById('footerId').style.position = 'static')
-  //   : (document.getElementById('footerId').style.position = 'fixed')
-
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['getCartProduct', cart],
-    queryFn: async () => {
-      return await Promise.allSettled(
+    queryFn: () => {
+      return Promise.allSettled(
         cart.map((el) => fetchCurrentProduct(token, el.id))
-      ).then((value) => {
-        return value
-      })
+      ).then((value) => value)
     },
   })
+
   if (cart.length === 0)
     return (
       <p className={styles.cardTitle}>
@@ -70,7 +65,7 @@ export const BasketList = () => {
     )
   }, 0)
   return (
-    <form className={styles.dataForm}>
+    <div className={styles.dataForm}>
       <p className={styles.cardTitle}>Корзина</p>
       <div className={styles.wrapper}>
         <div className={styles.cardProductList}>
@@ -109,6 +104,6 @@ export const BasketList = () => {
           </button>
         </div>
       </div>
-    </form>
+    </div>
   )
 }

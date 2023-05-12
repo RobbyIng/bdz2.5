@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 
 export const CurrentProduct = () => {
-  document.getElementById('footerId').style.position = 'fixed'
   const { idOfProduct } = useParams()
 
   const navigate = useNavigate()

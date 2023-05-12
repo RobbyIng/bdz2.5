@@ -3,10 +3,10 @@ import styles from './index.module.css'
 import { fetchSearchProducts } from '../../api/products'
 import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
-import { useAuth } from '../../hooks/useAuth'
+import { useNoAuth } from '../../hooks/useNoAuth'
 
 export const ProductList = () => {
-  const { token } = useAuth()
+  const { token } = useNoAuth()
   const { search } = useSelector((state) => state.filter)
 
   const { data, isLoading, isError, error } = useQuery({
