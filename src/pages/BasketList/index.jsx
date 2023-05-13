@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useQuery } from '@tanstack/react-query'
 import { fetchCurrentProduct } from '../../api/products'
-import { CartItem } from '../../components/CartItem'
+import { MemoCartItem } from '../../components/CartItem'
 import { cleanCart } from '../../redux/slices/cartSlice'
 
 export const BasketList = () => {
@@ -15,7 +15,7 @@ export const BasketList = () => {
   const { cart } = useSelector((state) => state)
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['getCartProduct', cart],
+    queryKey: ['getCartProduct', cart.length],
     queryFn: () => {
       return Promise.allSettled(
         cart.map((el) => fetchCurrentProduct(token, el.id))
@@ -71,7 +71,10 @@ export const BasketList = () => {
         <div className={styles.cardProductList}>
           {data.map((cartItem) => {
             return (
-              <CartItem key={cartItem.value._id} cartItem={cartItem.value} />
+              <MemoCartItem
+                key={cartItem.value._id}
+                cartItem={cartItem.value}
+              />
             )
           })}
         </div>

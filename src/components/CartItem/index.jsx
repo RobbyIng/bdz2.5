@@ -3,8 +3,9 @@ import styles from './index.module.css'
 import { deleteCartItem } from '../../redux/slices/cartSlice'
 import { Counter } from '../Counter'
 import { MemoCartItemBody } from '../CartItemBody'
+import React from 'react'
 
-export const CartItem = ({ cartItem }) => {
+const CartItem = ({ cartItem }) => {
   const dispatch = useDispatch()
 
   return (
@@ -24,3 +25,5 @@ export const CartItem = ({ cartItem }) => {
     </div>
   )
 }
+
+export const MemoCartItem = React.memo(CartItem)
