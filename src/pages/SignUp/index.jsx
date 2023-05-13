@@ -2,11 +2,11 @@ import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 import { signInFetch, signUpFetch } from '../../api/user'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 import styles from './index.module.css'
 import { useMutation } from '@tanstack/react-query'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setUpUser } from '../../redux/slices/userSlice'
+import { useAuth } from '../../hooks/useAuth'
 
 const signUpSchema = Yup.object().shape({
   email: Yup.string().email('Некорректный email').required('Required'),
@@ -15,14 +15,9 @@ const signUpSchema = Yup.object().shape({
 })
 
 export const SignUp = () => {
+  useAuth()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  const { token } = useSelector((state) => state.user)
-
-  useEffect(() => {
-    if (token) navigate('/products')
-  }, [navigate, token])
 
   const initialValuesSignUp = {
     email: '',

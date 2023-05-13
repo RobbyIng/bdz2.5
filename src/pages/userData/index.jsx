@@ -4,15 +4,17 @@ import styles from './index.module.css'
 import { useQuery } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux'
 import { cleanUser } from '../../redux/slices/userSlice'
-import { useAuth } from '../../hooks/useAuth'
+import { useNoAuth } from '../../hooks/useNoAuth'
+import { cleanCart } from '../../redux/slices/cartSlice'
 
 export const UserData = () => {
+  const { token } = useNoAuth()
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { token } = useAuth()
-
   const handleExit = () => {
+    dispatch(cleanCart())
     dispatch(cleanUser())
     return navigate('/')
   }

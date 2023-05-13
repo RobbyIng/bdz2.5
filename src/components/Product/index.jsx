@@ -1,8 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 import styles from './index.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCartItem } from '../../redux/slices/cartSlice'
 
 export const ProductItem = ({ productItem }) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { cart } = useSelector((state) => state)
+
+  const handleAddButton = () => {
+    if (!cart.find((element) => element.id === productItem._id))
+      dispatch(addCartItem({ id: productItem._id, count: 1, included: true }))
+  }
   return (
     <div className={styles.cardProduct}>
       <div
@@ -21,7 +31,13 @@ export const ProductItem = ({ productItem }) => {
         </div>
       </div>
       <div className="btnBin">
-        <button type="button" data-action="edit" className={styles.addToBin}>
+        <button
+          type="button"
+          data-action="edit"
+          className={styles.addToBin}
+          onClick={() => handleAddButton()}
+          disabled={productItem.stock === 0}
+        >
           В корзину
         </button>
       </div>
